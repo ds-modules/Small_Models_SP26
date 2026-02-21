@@ -20,3 +20,7 @@ Advanced high-school, community college, and first-year university students who 
 - Author notebooks in Jupyter/JupyterLab so they run unchanged on both local machines and the shared JupyterHub instance.
 - Package datasets and model weights with lightweight download helpers so students can swap between hosted APIs, open-source checkpoints, or tiny distilled models.
 - Keep GPU requirements optional; every activity should have a CPU-friendly path so learners can experiment anywhere.
+
+##  NBGitpuller Links
+- Workshop Hub with Github Auth [Hub]( https://gpu-demo.cloudbank.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fds-modules%2FSmall_Models_SP26&urlpath=lab%2Ftree%2FSmall_Models_SP26%2F)
+- 
