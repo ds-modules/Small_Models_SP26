@@ -18,3 +18,4 @@ dependencies:
       - anthropic>=0.8
       - python-dotenv
       - langchain>=0.1
+      - sentence-transformers
