@@ -1,5 +1,4 @@
-#RAG FOMC Update
-###March 2nd, 2026
+RAG FOMC Update (March 2nd, 2026)
 
 Current status: 
 
