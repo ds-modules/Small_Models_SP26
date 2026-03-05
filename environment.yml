@@ -19,3 +19,4 @@ dependencies:
       - python-dotenv
       - langchain>=0.1
       - sentence-transformers
+      - datasets 
