@@ -1,8 +1,18 @@
 """
 utils.py — Helper functions for LLM Context Management notebook.
 
-All heavy logic lives here so the notebook stays clean.
+All heavy logic lives here so the notebook stays clean and readable.
 Import what you need:  from utils import build_system_message, ChatAssistant, ...
+
+Modules:
+  - System-Prompt Builders     : build_system_message, build_course_prompt
+  - Token Utilities            : count_tokens, estimated_wait
+  - History Compression        : summarize_full_text, extract_key_entities, compress_semantic
+  - Profile Change Detection   : detect_profile_changes
+  - Chat Assistant             : ChatAssistant
+  - Context Window Visualizer  : visualize_context_window
+  - RAG Helpers                : retrieve, rag_chat
+  - Chat Bubble Renderer       : bubble, token_pill
 """
 
 import re
@@ -15,7 +25,20 @@ from IPython.display import display, HTML
 # ═══════════════════════════════════════════════════════════════════════
 
 def build_system_message(profile, project_profile=None):
-    """Build a personalised system prompt from a user profile dict."""
+    """
+    Build a personalised system prompt from a user profile dict.
+
+    The system prompt tells the LLM who it's talking to and how to behave.
+    By constructing it dynamically from the profile, we get a different
+    prompt for every user — without writing separate prompts by hand.
+
+    Args:
+        profile (dict): User info — name, expertise, course, style_preferences, etc.
+        project_profile (dict, optional): Info about the user's current project.
+
+    Returns:
+        str: A formatted system prompt string ready to pass to the LLM.
+    """
     name      = profile.get("name", "the user")
     expertise = profile.get("expertise", "intermediate")
     project   = profile.get("current_project", "")
@@ -37,7 +60,7 @@ def build_system_message(profile, project_profile=None):
         for s in style:
             lines.append(f"- {s}")
 
-    # Course-aware next-step recommendations
+    # Recommend the logical next course in Berkeley's data science curriculum:
     # Data 8 → Data 100 → Data 102 → CS 189
     course = profile.get("course", "").strip().lower()
     NEXT_COURSE = {
@@ -53,6 +76,7 @@ def build_system_message(profile, project_profile=None):
             f"- When relevant, suggest the student considers {next_rec[0]} next — {next_rec[1]}.",
         ]
 
+    # Adjust tone and depth based on expertise level
     if expertise.lower() in ["beginner", "new to coding"]:
         lines += [
             "",
@@ -87,7 +111,18 @@ def build_system_message(profile, project_profile=None):
 
 
 def build_course_prompt(course):
-    """Return a tailored system prompt for Data 8 or Data 100 students."""
+    """
+    Return a tailored system prompt for Data 8 or Data 100 students.
+
+    Data 8 and Data 100 use different libraries (datascience vs pandas),
+    so we need separate prompts to avoid confusing students with the wrong syntax.
+
+    Args:
+        course (str): Either "Data 8" or "Data 100".
+
+    Returns:
+        str: A course-specific system prompt string.
+    """
     if course == "Data 8":
         lib_guidance = (
             "The student is in Data 8 (Foundations of Data Science) at UC Berkeley. "
@@ -114,14 +149,40 @@ def build_course_prompt(course):
 # ═══════════════════════════════════════════════════════════════════════
 
 def count_tokens(messages, model=None):
+    """
+    Count the total number of tokens across a list of messages.
+
+    Token counting matters because the LLM has a fixed context window —
+    if we exceed it, older messages get cut off and the model loses memory.
+
+    Args:
+        messages (list): List of {"role": ..., "content": ...} dicts.
+        model: A loaded llama_cpp model. If None, falls back to a heuristic.
+
+    Returns:
+        int: Estimated total token count.
+    """
     if model is not None:
+        # Use the model's actual tokenizer for an exact count
         return sum(len(model.tokenize(m["content"].encode("utf-8"))) for m in messages)
-    # fallback: ~4 chars per token
+    # Fallback heuristic: ~4 characters per token (works reasonably well for English)
     return sum(len(m.get("content", "")) // 4 for m in messages)
 
 
 def estimated_wait(tokens, speed_tps=25):
-    """Rough wait estimate: context tokens / generation speed."""
+    """
+    Estimate how long the model will take to process a given number of tokens.
+
+    Useful for setting user expectations before a slow generation call.
+
+    Args:
+        tokens (int): Number of tokens to process.
+        speed_tps (int): Model speed in tokens per second.
+                         25 tps is a conservative estimate for llama-cpp on a shared CPU.
+
+    Returns:
+        float: Estimated wait time in seconds.
+    """
     return tokens / speed_tps
 
 
@@ -130,6 +191,7 @@ def estimated_wait(tokens, speed_tps=25):
 # ═══════════════════════════════════════════════════════════════════════
 
 def _conversation_text(messages):
+    """Format a messages list into a plain-text transcript for summarisation prompts."""
     return "".join(
         f"[{'User' if m['role'] == 'user' else 'AI'}]: {m['content']}\n\n"
         for m in messages
@@ -137,37 +199,78 @@ def _conversation_text(messages):
 
 
 def summarize_full_text(messages_to_summarize, model):
-    """Summarise entire conversation into 1-2 sentences of prose."""
+    """
+    Compress an entire conversation into 1-2 sentences of prose.
+
+    When the conversation history grows too long, we can't keep all of it
+    in the context window. This function distills it into a short summary
+    that preserves the main thread without consuming too many tokens.
+
+    Args:
+        messages_to_summarize (list): The portion of history to compress.
+        model: A loaded llama_cpp model.
+
+    Returns:
+        str: A 1-2 sentence summary of the conversation.
+    """
     prompt = f"Summarize this conversation in 1-2 sentences only:\n\n{_conversation_text(messages_to_summarize)}"
     resp = model.create_chat_completion(
         messages=[{"role": "user", "content": prompt}],
-        max_tokens=60, temperature=0.7,
+        max_tokens=60,   # 1-2 sentences fit comfortably within 60 tokens
+        temperature=0.7,
     )
     return resp["choices"][0]["message"]["content"]
 
 
 def extract_key_entities(messages_to_summarize, model):
-    """Extract important facts and decisions as bullet points."""
+    """
+    Extract important facts and decisions from a conversation as bullet points.
+
+    Unlike a prose summary, bullet points make it easy for the LLM to
+    quickly reference specific facts (e.g. "User is working in Python 3.11").
+
+    Args:
+        messages_to_summarize (list): The portion of history to compress.
+        model: A loaded llama_cpp model.
+
+    Returns:
+        str: 3-4 bullet points of key facts.
+    """
     prompt = (
         f"Extract key facts from this conversation as 3-4 bullet points only:\n\n"
         f"{_conversation_text(messages_to_summarize)}\nFormat as: - Fact\n- Fact"
     )
     resp = model.create_chat_completion(
         messages=[{"role": "user", "content": prompt}],
-        max_tokens=80, temperature=0.3,
+        max_tokens=80,   # enough headroom for 3-4 short bullet points
+        temperature=0.3, # low temperature = more deterministic, factual output
     )
     return resp["choices"][0]["message"]["content"]
 
 
 def compress_semantic(messages_to_summarize, model):
-    """Combine summary + key bullets for optimal balance."""
+    """
+    Compress a conversation using both a prose summary and key bullet points.
+
+    This is the best-of-both-worlds strategy: the summary gives narrative
+    continuity, while the bullets preserve specific facts. Together they
+    use fewer tokens than keeping the raw history.
+
+    Args:
+        messages_to_summarize (list): The portion of history to compress.
+        model: A loaded llama_cpp model.
+
+    Returns:
+        str: A one-sentence summary followed by 2-3 key fact bullets.
+    """
     prompt = (
         f"Compress this conversation:\n\n{_conversation_text(messages_to_summarize)}\n"
         "Provide:\n1. One-sentence summary\n2. Key facts (2-3 bullets only)"
     )
     resp = model.create_chat_completion(
         messages=[{"role": "user", "content": prompt}],
-        max_tokens=80, temperature=0.5,
+        max_tokens=80,   # tight limit forces the model to be concise
+        temperature=0.5,
     )
     return resp["choices"][0]["message"]["content"]
 
@@ -178,8 +281,22 @@ def compress_semantic(messages_to_summarize, model):
 
 def detect_profile_changes(user_message, user_profile, project_profile, model):
     """
-    Ask the model whether any profile fields should be updated.
-    Returns a dict with optional keys: 'user_profile', 'project_profile', 'conflict'.
+    Ask the model whether the user's latest message should update their profile.
+
+    Users sometimes reveal new information mid-conversation (e.g. "I actually
+    have 5 years of experience"). This function detects those signals and
+    returns the fields that should be updated — so the assistant can adapt
+    its tone immediately without the user having to re-configure anything.
+
+    Args:
+        user_message (str): The latest message from the user.
+        user_profile (dict): Current user profile.
+        project_profile (dict): Current project profile.
+        model: A loaded llama_cpp model.
+
+    Returns:
+        dict: Fields to update, with optional 'conflict' key if the new info
+              contradicts the existing profile. Returns {} if no changes needed.
     """
     detection_prompt = f"""A user said: "{user_message}"
 
@@ -202,7 +319,8 @@ Your response (JSON only):"""
 
     resp = model.create_chat_completion(
         messages=[{"role": "user", "content": detection_prompt}],
-        max_tokens=100, temperature=0.1,
+        max_tokens=100,  # JSON responses are short; 100 tokens is generous
+        temperature=0.1, # near-zero temperature for consistent, structured output
     )
     raw = resp["choices"][0]["message"]["content"].strip()
     raw = re.sub(r"```json|```", "", raw).strip()
@@ -210,7 +328,8 @@ Your response (JSON only):"""
     try:
         result = json.loads(raw)
     except json.JSONDecodeError:
-        # fallback: keyword-based detection if model fails to produce valid JSON
+        # The model failed to return valid JSON — fall back to keyword matching
+        # as a safety net so profile updates are never silently dropped
         experience_keywords = [
             "years of experience", "years experience", "professionally",
             "i'm an expert", "i am an expert", "senior developer",
@@ -229,11 +348,23 @@ Your response (JSON only):"""
 
 class ChatAssistant:
     """
-    Complete chat system with:
-    - User & Project Profiles → dynamic system prompt
-    - Chat History with Sliding Window
-    - Semantic History Compression
-    - Dynamic Profile Updates & Conflict Resolution
+    A complete chat system that combines all the techniques from this notebook.
+
+    Features:
+    - Dynamic system prompt built from user & project profiles
+    - Sliding window history (keeps only the last `max_turns` turns in context)
+    - Semantic compression (older turns are summarised, not discarded)
+    - Automatic profile updates when the user reveals new information
+    - Conflict detection when new info contradicts the existing profile
+
+    Args:
+        user_profile (dict): Initial user profile (name, expertise, etc.).
+        project_profile (dict): Initial project profile (name, tools, goal, etc.).
+        model: A loaded llama_cpp model.
+        max_turns (int): How many recent turns to keep in full before compressing.
+                         Default 4 = 8 messages (4 user + 4 assistant).
+        chunk_size (int): How many turns to compress at a time when the window overflows.
+                          Default 2 keeps compression fast and cheap.
     """
 
     def __init__(self, user_profile, project_profile, model, max_turns=4, chunk_size=2):
@@ -242,12 +373,13 @@ class ChatAssistant:
         self.model              = model
         self.max_turns          = max_turns
         self.chunk_size         = chunk_size
-        self.recent_history     = []
-        self.summary            = None
+        self.recent_history     = []   # full-text turns within the sliding window
+        self.summary            = None # compressed summary of older turns
         self.total_turns        = 0
-        self.conflicts_detected = []
+        self.conflicts_detected = []   # log of profile conflicts for show_state()
 
     def _build_system_message(self):
+        """Construct the system prompt from the current profile state."""
         u, p = self.user_profile, self.project_profile
         lines = [
             "You are a helpful AI assistant.",
@@ -264,6 +396,7 @@ class ChatAssistant:
         if p.get("current_goal"):
             lines.append(f"- Current goal: {p['current_goal']}")
 
+        # Adjust response style based on expertise level
         exp = u.get("expertise", "").lower()
         if exp in ["beginner", "new to coding", "python beginner"]:
             lines += ["", "## Style",
@@ -279,18 +412,26 @@ class ChatAssistant:
         for pref in u.get("style_preferences", []):
             lines.append(f"- {pref}")
 
+        # Inject compressed summary of older turns so the model retains
+        # context from before the sliding window
         if self.summary:
             lines += ["", "## Conversation Summary", self.summary]
 
         return "\n".join(lines)
 
     def _build_messages(self, user_message):
+        """Assemble the full messages list: system prompt + history + new message."""
         msgs = [{"role": "system", "content": self._build_system_message()}]
         msgs.extend(self.recent_history)
         msgs.append({"role": "user", "content": user_message})
         return msgs
 
     def _maybe_compress(self):
+        """
+        Compress the oldest chunk of history if the window is full.
+
+        Returns True if compression happened (useful for logging).
+        """
         if len(self.recent_history) > self.max_turns * 2:
             to_compress = self.recent_history[: self.chunk_size * 2]
             self.recent_history = self.recent_history[self.chunk_size * 2:]
@@ -299,6 +440,23 @@ class ChatAssistant:
         return False
 
     def chat(self, user_message, show_workflow=True):
+        """
+        Send a message and get a response from the assistant.
+
+        Under the hood this:
+          1. Builds the messages list (system + history + new message)
+          2. Calls the model
+          3. Appends the exchange to history
+          4. Checks for profile updates
+          5. Compresses history if the window is full
+
+        Args:
+            user_message (str): The user's input.
+            show_workflow (bool): If True, prints a step-by-step log of what's happening.
+
+        Returns:
+            str: The assistant's reply.
+        """
         if show_workflow:
             print(f"\n{'='*60}")
             print(f"Turn {self.total_turns + 1}")
@@ -306,12 +464,17 @@ class ChatAssistant:
             print(f'👤 User: "{user_message}"')
 
         msgs     = self._build_messages(user_message)
-        resp     = self.model.create_chat_completion(messages=msgs, max_tokens=150, temperature=0.7)
+        resp     = self.model.create_chat_completion(
+            messages=msgs,
+            max_tokens=150,  # typical tutoring response fits within 150 tokens
+            temperature=0.7,
+        )
         ai_reply = resp["choices"][0]["message"]["content"].strip()
 
         self.recent_history.append({"role": "user",      "content": user_message})
         self.recent_history.append({"role": "assistant", "content": ai_reply})
 
+        # Check if the user's message reveals new info that should update the profile
         updates = detect_profile_changes(
             user_message, self.user_profile, self.project_profile, self.model
         )
@@ -344,6 +507,7 @@ class ChatAssistant:
         return ai_reply
 
     def show_state(self):
+        """Render a visual dashboard of the current session state as HTML."""
         profile_rows = "".join(f"""
         <div style="display:flex;justify-content:space-between;align-items:center;
                     padding:8px 12px;border-bottom:1px solid #1e293b;
@@ -419,13 +583,24 @@ class ChatAssistant:
 # ═══════════════════════════════════════════════════════════════════════
 
 def visualize_context_window(messages, model, n_ctx=4096, title="Context Window Snapshot"):
-    """Render a stacked bar showing how each message fills the context window."""
+    """
+    Render a stacked bar chart showing how each message fills the context window.
+
+    This makes the abstract idea of a "context window" tangible — students can
+    see exactly how many tokens each role consumes and how close we are to the limit.
+
+    Args:
+        messages (list): The full messages list passed to the model.
+        model: A loaded llama_cpp model (used for exact token counts).
+        n_ctx (int): The model's maximum context window size in tokens.
+        title (str): Title displayed above the visualisation.
+    """
     COLORS = {
         "system":    ("#f9e2af", "System Prompt"),
         "user":      ("#89b4fa", "User"),
         "assistant": ("#a6e3a1", "Assistant"),
     }
-    SPEED = 25  # tokens/sec
+    SPEED = 25  # conservative tokens/sec estimate for llama-cpp on a shared CPU
 
     segments = []
     for m in messages:
@@ -523,8 +698,22 @@ def visualize_context_window(messages, model, n_ctx=4096, title="Context Window 
 
 def retrieve(query, knowledge_base, top_k=2):
     """
-    Keyword-overlap retriever (replace with vector similarity in production).
-    Returns up to top_k most relevant docs.
+    Find the most relevant documents from a knowledge base for a given query.
+
+    Uses keyword overlap (bag-of-words) to score relevance — simple but effective
+    for small, curated knowledge bases like course FAQs.
+
+    ⚠️ Limitation: this approach matches on exact words, not meaning.
+    For example, "car" and "vehicle" would NOT match. For production use,
+    replace with vector similarity (e.g. sentence-transformers + cosine similarity).
+
+    Args:
+        query (str): The user's question.
+        knowledge_base (list): List of {"title": ..., "content": ...} dicts.
+        top_k (int): Maximum number of documents to return.
+
+    Returns:
+        list: Up to top_k most relevant documents, sorted by relevance score.
     """
     query_words = set(query.lower().split())
     scored = []
@@ -537,9 +726,24 @@ def retrieve(query, knowledge_base, top_k=2):
 
 def rag_chat(user_question, model, knowledge_base, system_base=None):
     """
-    1. Retrieve relevant snippets.
-    2. Inject as 'Retrieved Knowledge' block in system prompt.
-    3. Call model and return (reply, retrieved_docs, token_count).
+    Answer a question by first retrieving relevant knowledge, then generating a response.
+
+    This is the core RAG (Retrieval-Augmented Generation) pattern:
+      1. Retrieve the most relevant docs from the knowledge base
+      2. Inject them into the system prompt as context
+      3. Let the model answer using that context
+
+    Without RAG, the model can only use what it learned during training.
+    With RAG, it can answer questions about course-specific content it has never seen.
+
+    Args:
+        user_question (str): The student's question.
+        model: A loaded llama_cpp model.
+        knowledge_base (list): List of {"title": ..., "content": ...} dicts.
+        system_base (str, optional): Base system prompt to prepend context to.
+
+    Returns:
+        tuple: (reply: str, retrieved_docs: list, token_count: int)
     """
     if system_base is None:
         system_base = "You are a helpful AI assistant for Berkeley students."
@@ -559,7 +763,12 @@ def rag_chat(user_question, model, knowledge_base, system_base=None):
         {"role": "user",   "content": user_question},
     ]
     tok_count = count_tokens(msgs, model)
-    resp      = model.create_chat_completion(messages=msgs, max_tokens=180, temperature=0.7)
+    resp      = model.create_chat_completion(
+        messages=msgs,
+        max_tokens=180,  # slightly more generous than tutoring responses
+                         # to allow for multi-step explanations
+        temperature=0.7,
+    )
     reply     = resp["choices"][0]["message"]["content"].strip()
     return reply, docs, tok_count
 
@@ -569,6 +778,20 @@ def rag_chat(user_question, model, knowledge_base, system_base=None):
 # ═══════════════════════════════════════════════════════════════════════
 
 def bubble(role, content, extra_class=""):
+    """
+    Render a single chat message as a styled HTML bubble.
+
+    Each role gets a distinct colour and alignment so students can
+    visually distinguish who said what in the conversation.
+
+    Args:
+        role (str): One of "system", "user", or "assistant".
+        content (str): The message text to display.
+        extra_class (str): Optional CSS class for additional styling hooks.
+
+    Returns:
+        str: An HTML string containing the rendered bubble.
+    """
     cfg = {
         "system":    ("#f9e2af", "#f9e2af18", "left",  "⚙️ system"),
         "user":      ("#89b4fa", "#89b4fa18", "right", "👤 user"),
@@ -591,9 +814,25 @@ def bubble(role, content, extra_class=""):
 
 
 def token_pill(msgs, model):
+    """
+    Render a small token-count badge for a list of messages.
+
+    Colour-coded by urgency:
+      - Green  : under 150 tokens (plenty of room)
+      - Yellow : 150–500 tokens  (getting full)
+      - Red    : over 500 tokens  (approaching limit)
+
+    Args:
+        msgs (list): List of {"role": ..., "content": ...} dicts.
+        model: A loaded llama_cpp model. Falls back to heuristic if unavailable.
+
+    Returns:
+        str: An HTML string containing the rendered badge.
+    """
     try:
         n = sum(len(model.tokenize(m["content"].encode())) for m in msgs)
     except Exception:
+        # Fall back to the ~4 chars/token heuristic if tokenizer is unavailable
         n = sum(len(m.get("content", "")) // 4 for m in msgs)
     cls = "crit" if n > 500 else "warn" if n > 150 else ""
     return f'<span class="token-pill {cls}">🪙 {n} tokens</span>'
