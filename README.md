@@ -24,3 +24,4 @@ Advanced high-school, community college, and first-year university students who 
 ##  NBGitpuller Links
 - Workshop Hub with Github Auth [Hub]( https://gpu-demo.cloudbank.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fds-modules%2FSmall_Models_SP26&urlpath=lab%2Ftree%2FSmall_Models_SP26%2F)
 - NRP Hub with CILogon [Hub]( https://training.nrp-nautilus.io/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fds-modules%2FSmall_Models_SP26&branch=main&urlpath=lab%2Ftree%2FSmall_Models_SP26%2F) **[Note - click Sign in with Authentik  then look for CILOGON then refresh page]**
+- Jetstream2 Hub with Github Auth [Hub](https://hub.soc260005.projects.jetstream-cloud.org/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fds-modules%2FSmall_Models_SP26&urlpath=lab%2Ftree%2FSmall_Models_SP26%2F)
