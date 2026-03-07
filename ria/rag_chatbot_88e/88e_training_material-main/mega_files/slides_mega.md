@@ -1,5 +1,116 @@
 
 
+--- SUMMARY for SLIDES ---
+
+- file: Lecture 1 - Introduction and Overview.md
+  title: Lecture 1 - Introduction and Overview
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 1 -
+    Introduction and Overview.pptx
+  week: 1
+  order: 1
+- file: Lecture 2 - Demand.md
+  title: Lecture 2 - Demand
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 2 -
+    Demand.pptx
+  week: 2
+  order: 2
+- file: Lecture 3 - Supply.md
+  title: Lecture 3 - Supply
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 3 -
+    Supply.pptx
+  week: 3
+  order: 3
+- file: ' Lecture 4 - Public.md'
+  title: ' Lecture 4 - Public'
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/ Lecture 4
+    - Public.pptx
+  week: 4
+  order: 4
+- file: Lecture 5 - Production C-D.md
+  title: Lecture 5 - Production C-D
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 5 -
+    Production C-D.pptx
+  week: 5
+  order: 5
+- file: Lecture 6 - Utility and Latex.md
+  title: Lecture 6 - Utility and Latex
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 6 -
+    Utility and Latex.pptx
+  week: 6
+  order: 6
+- file: Lecture 7 - Inequality.md
+  title: Lecture 7 - Inequality
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 7 -
+    Inequality.pptx
+  week: 7
+  order: 7
+- file: Lecture 8  - Macroeconomics.md
+  title: Lecture 8  - Macroeconomics
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 8  -
+    Macroeconomics.pptx
+  week: 8
+  order: 8
+- file: Lecture 8 - Macro.md
+  title: Lecture 8 - Macro
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 8 -
+    Macro.pptx
+  week: 8
+  order: 9
+- file: Lecture 9 - Game Theory_.md
+  title: Lecture 9 - Game Theory 
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 9 -
+    Game Theory_.pptx
+  week: 9
+  order: 10
+- file: Lecture 10 - Development_.md
+  title: Lecture 10 - Development 
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 10
+    - Development_.pptx
+  week: 10
+  order: 11
+- file: Lecture 11 - Econometrics.md
+  title: Lecture 11 - Econometrics
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 11
+    - Econometrics.pptx
+  week: 11
+  order: 12
+- file: Lecture 12 - Finance.md
+  title: Lecture 12 - Finance
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 12
+    - Finance.pptx
+  week: 12
+  order: 13
+- file: Lecture 13 - Environmental Economics.md
+  title: Lecture 13 - Environmental Economics
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 13
+    - Environmental Economics.pptx
+  week: 13
+  order: 14
+- file: Lecture 15 - Conclusion.md
+  title: Lecture 15 - Conclusion
+  type: slides
+  source_path: /Users/ericvandusen/Documents/Data88E-ForTraining/F24LS/Lecture 15
+    - Conclusion.pptx
+  week: 15
+  order: 15
+
+
+
+
 --- START  Lecture 4 - Public.md ---
 
 ---
