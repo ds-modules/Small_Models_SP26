@@ -16,8 +16,9 @@ rag_course_shareable/
 ```
 
 ---
-
+![Deme](../demo.mp4)
 ## Quick start
+
 
 ### Step 1. Open a terminal
 
