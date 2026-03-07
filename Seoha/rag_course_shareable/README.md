@@ -16,7 +16,7 @@ rag_course_shareable/
 ```
 
 ---
-![Deme](../demo.mp4)
+![Deme](./demo.mp4)
 ## Quick start
 
 
