@@ -1012,7 +1012,6 @@ with tab_observability:
     st.write("Generation mode:", llm_mode)
 
 st.markdown("---")
-st.subheader("Teaching Prompts")
 st.write("- Compare the evidence-based answer and the generated answer.")
 st.write("- Try a vague question and then a specific question.")
 st.write("- Change chunk size and see whether the top chunk changes.")
