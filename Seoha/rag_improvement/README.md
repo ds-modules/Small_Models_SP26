@@ -7,7 +7,7 @@ This version supports:
 - Claude API
 - Retrieval-only mode
 
-![Demo](demo.png)
+![Demo](demo2.png)
 
 ## Files
 
