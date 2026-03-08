@@ -7,7 +7,7 @@ This version supports:
 - Claude API
 - Retrieval-only mode
 
-The local model is loaded at app startup on purpose.
+![Demo](demo.png)
 
 ## Files
 
