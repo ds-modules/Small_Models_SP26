@@ -1,6 +1,9 @@
 # Small_Models_SP26
 
-Introductory AI learning materials for freshmen and community college students. All notebooks run on CPU on a shared JupyterHub. No GPU required.
+Introductory AI learning materials for freshmen and community college students. All notebooks can run on CPU on a shared JupyterHub but run faster on GPU enabled Juptyerhubs.  
+
+This work was presented as part of a tutorial at the 2026 NAIRR Annual Meeting. 
+
 
 ## Repository Layout
 
@@ -20,12 +23,12 @@ Students load a small model and have it answer SAT-style multiple choice questio
 Three approaches each applying Retrieval-Augmented Generation (RAG) to a different corpus. RAG lets a model answer questions about a specific document collection by searching for relevant passages before generating a response. The three corpuses demonstrate how the same technique applies across economics applications.
 
 ### 6 — No-Code Notebooks (`6-No_Code/`)
-Narrative notebooks with interactive elements through widgets. Used for conceptual lessons, discussion prompts, and reading assignments. Good for class sessions where the goal is understanding rather than coding.  However this does provide a completely customizable format for any lesson, so it could be used for coding exercises as well.
+Narrative notebooks with interactive elements through widgets. Used for conceptual lessons, discussion prompts, and reading assignments. Good for class sessions where the goal is understanding rather than coding.  However this does provide a completely customizable format for any lesson, so it could be adapted to local use cases.
 
 ---
 
-## JupyterHub Links
+## JupyterHub Links  [These links were for the March 2026 Tutorial and may not stay live]
 
 - Workshop Hub (Shared Password): [Launch](https://gpu-demo.cloudbank.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fds-modules%2FSmall_Models_SP26&urlpath=lab%2Ftree%2FSmall_Models_SP26%2F)
 - NRP Hub (CILogon): [Launch](https://training.nrp-nautilus.io/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fds-modules%2FSmall_Models_SP26&branch=main&urlpath=lab%2Ftree%2FSmall_Models_SP26%2F) — click **Sign in with Authentik**, then look for CILogon, then refresh the page
-- Jetstream2 Hub (GitHub Auth): [Launch](https://hub.soc260005.projects.jetstream-cloud.org/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fds-modules%2FSmall_Models_SP26&urlpath=lab%2Ftree%2FSmall_Models_SP26%2F)
+- Jetstream2 Hub (Shared Password): [Launch](https://hub.soc260005.projects.jetstream-cloud.org/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fds-modules%2FSmall_Models_SP26&urlpath=lab%2Ftree%2FSmall_Models_SP26%2F)
