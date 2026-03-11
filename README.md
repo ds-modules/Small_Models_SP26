@@ -4,6 +4,9 @@ Introductory AI learning materials for freshmen and community college students. 
 
 This work was presented as part of a tutorial at the 2026 NAIRR Annual Meeting. 
 
+Resources
+[Slide Deck 1](https://docs.google.com/presentation/d/1pHkNsEhVZVt1fodAtpcIaOgnvt8HDO5PRUu7xQGaBQk/edit?usp=sharing)  - Intro  to Team, Intro to Jupyterhub  -  Intro to Small Models
+[Slide Deck 2](https://docs.google.com/presentation/d/1rPtyIPq9fQC91Vp4w3YESjVjqWAfS6ubUBB0x0rSDnA/edit?usp=sharing)  - Teaching workflow, NRP, Jetstream2
 
 ## Repository Layout
 
