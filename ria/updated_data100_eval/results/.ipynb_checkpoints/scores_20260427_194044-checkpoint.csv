@@ -1,0 +1,87 @@
+model,question_id,type,topic,points_earned,max_points,answer,correct_answer,correct,feedback,latency,judge_strategy
+Llama-3.2-3B,q1a_i,mcq,sampling,1.0,1.0,B,B,True,,0.33,
+Llama-3.2-3B,q1a_ii,mcq,sampling,1.0,1.0,B,B,True,,0.34,
+Llama-3.2-3B,q1a_iii,mcq,sampling,1.0,1.0,C,C,True,,0.34,
+Llama-3.2-3B,q1b_ii,mcq,data_types,2.0,2.0,C,C,True,,0.37,
+Llama-3.2-3B,q1b_iii,mcq,data_types,1.0,1.0,A,A,True,,0.33,
+Llama-3.2-3B,q1b_iv_A,mcq,regex,0.0,2.0,A,B,False,,0.86,
+Llama-3.2-3B,q1b_iv_B,mcq,regex,0.0,2.0,A,B,False,,0.35,
+Llama-3.2-3B,q1b_iv_C,mcq,regex,2.0,2.0,A,A,True,,0.5,
+Llama-3.2-3B,q1b_viii_semester,mcq,visualization,2.0,2.0,A,A,True,,0.31,
+Llama-3.2-3B,q1b_viii_hist,mcq,visualization,0.0,2.0,A,B,False,,0.33,
+Llama-3.2-3B,q1b_ix_hist,mcq,visualization,2.0,2.0,A,A,True,,0.47,
+Llama-3.2-3B,q1b_ix_kde,mcq,visualization,2.0,2.0,A,A,True,,0.28,
+Llama-3.2-3B,q2b_iv,mcq,statistics,0.0,0.5,A,B,False,,0.33,
+Llama-3.2-3B,q2b_vi,mcq,statistics,0.0,0.5,A,B,False,,0.35,
+Llama-3.2-3B,q3a,mcq,linear_regression,3.0,3.0,A,A,True,,0.31,
+Llama-3.2-3B,q3a_nonlinear,mcq,linear_regression,0.0,3.0,A,B,False,,0.4,
+Llama-3.2-3B,q3c_i_rank,mcq,linear_regression,2.0,2.0,A,A,True,,0.48,
+Llama-3.2-3B,q3d_regularization,mcq,linear_regression,1.0,1.0,A,A,True,,0.35,
+Llama-3.2-3B,q4a_bias_model2,mcq,linear_regression,2.0,2.0,A,A,True,,0.48,
+Llama-3.2-3B,q4b_irreducible,mcq,linear_regression,0.0,1.0,B,A,False,,0.42,
+Llama-3.2-3B,q6b_pca_variance,mcq,pca,0.0,1.0,A,C,False,,0.46,
+Llama-3.2-3B,q6c_pca_total_variance,mcq,pca,0.0,1.0,B,D,False,,0.37,
+Llama-3.2-3B,q2a_i,short_answer,probability,2.0,2.0,"To calculate Bias(alpha-hat), we need to find E[alpha-hat] and alpha.
+
+E[alpha-hat] = E[(1/100) * sum(Xi)] = (1/100) * E[sum(Xi)] = (1/100) * 100 * E[Xi] = E[Xi] = alpha.
+
+Since E[alpha-hat] = alpha, ",E[alpha-hat] = E[(1/100)*sum(Xi)] = (1/100)*sum(E[Xi]) = (1/100)*(100*alpha) = alpha. Therefore Bias,,"The student correctly applied linearity of expectation, computed E[alpha-hat] = alpha, and concluded the estimator is unbiased with Bias = 0.",1.12,rubric_anchored
+Llama-3.2-3B,q2a_ii,short_answer,probability,1.33,2.0,"To calculate Var(alpha-hat), we use the formula for the variance of a sample mean:
+
+Var(alpha-hat) = Var(1/100 * sum(Xi)) = (1/100)^2 * Var(sum(Xi))
+
+Since Var(Xi) = sigma^2 for all i, we can rewrite ",Var(alpha-hat) = Var((1/100)*sum(Xi)) = (1/100^2)*sum(Var(Xi)) = (1/10000)*(100*sigma^2) = sigma^2/1,,"The student correctly applied the variance scaling rule and reached the correct final answer, but failed to explicitly justify why Var(sum(Xi)) = 100*sigma^2 by invoking the independence assumption.",1.02,rubric_anchored
+Llama-3.2-3B,q3e_cv,short_answer,linear_regression,0.0,1.0,"To determine the best-performing value of lambda, Sarika needs to calculate the MSE on a held-out validation set 4 times, one for each fold in the 4-fold cross-validation. 
+
+Here's the calculation:
+
+*",One validation MSE is computed per fold per lambda value. There are 4 folds and 6 lambda values. Tot,,"The student fundamentally misunderstands the cross-validation process by confusing which dimension (folds vs. lambda values) is being held out, and arrives at an answer of 4 MSE calculations instead o",1.54,rubric_anchored
+Llama-3.2-3B,q5a_logistic_max_accuracy,short_answer,logistic_regression,0.0,2.0,"The maximum possible accuracy a logistic regression model can achieve on this dataset is 100% if the model is able to perfectly predict the outcome for every single data point, which is theoretically ","The maximum accuracy is 4/5 = 80%. The dataset is not linearly separable, so we cannot achieve 100% ",,"The student claims 100% accuracy is possible and does not identify that the data is not linearly separable, contradicting both the correct answer and the reference justification that only 4/5 points c",0.74,rubric_anchored
+Llama-3.2-3B,q5b_logistic_prob,short_answer,logistic_regression,2.0,2.0,"To compute the probability p that the One-Hot Wonders win, we need to plug in the values into the logistic regression model.
+
+The logistic regression model is given by:
+
+p = 1 / (1 + exp(-θ^T x))
+
+whe","x = [1, 3, 1]. z = theta^T * x = 3*1 + 2*3 + 0*1 = 3 + 6 + 0 = 9. p = sigmoid(9) = 1/(1 + e^{-9}).",,"The student correctly formed the feature vector, computed z = 9, and applied the sigmoid function, though they went beyond the reference answer by computing a numerical approximation.",7.92,rubric_anchored
+Llama-3.2-3B,q5c_ii_precision,short_answer,logistic_regression,0.0,1.0,"To calculate precision, we need to find the number of true positives (TP) and false positives (FP). 
+
+TP = number of correctly predicted positive instances = 2 (at indices 2 and 4)
+FP = number of inco","TP = 1 (Y-hat=1 and Y=1: only row 2 where Y-hat=1, Y=1). FP = 2 (Y-hat=1 but Y=0: rows 1 and 3). Pre",,"The student incorrectly identified TP=2 and FP=3, leading to an incorrect precision of 2/5 instead of the correct TP=1, FP=2, and precision=1/3; the student appears to have mismatched predictions with",1.11,rubric_anchored
+Llama-3.2-3B,q7a_clustering,short_answer,clustering,0.5,2.0,"Here are the steps of agglomerative clustering with COMPLETE linkage:
+
+1. Start with individual clusters: A, B, C, D, E.
+2. Calculate the distance between each pair of points:
+   - A and B: 1
+   - A a","1. {A} merges with {B} to form {A,B} (distance=1). 2. {C} merges with {A,B} to form {A,B,C} (complet",,"The student correctly identifies the first merge of {A} and {B}, but fails to apply complete linkage correctly in subsequent steps—using single linkage distances instead of the maximum distances betwe",2.14,rubric_anchored
+Qwen-2.5-7B,q1a_i,mcq,sampling,1.0,1.0,B,B,True,,0.29,
+Qwen-2.5-7B,q1a_ii,mcq,sampling,1.0,1.0,B,B,True,,0.86,
+Qwen-2.5-7B,q1a_iii,mcq,sampling,1.0,1.0,C,C,True,,0.26,
+Qwen-2.5-7B,q1b_ii,mcq,data_types,2.0,2.0,C,C,True,,0.48,
+Qwen-2.5-7B,q1b_iii,mcq,data_types,1.0,1.0,A,A,True,,0.31,
+Qwen-2.5-7B,q1b_iv_A,mcq,regex,0.0,2.0,A,B,False,,1.03,
+Qwen-2.5-7B,q1b_iv_B,mcq,regex,0.0,2.0,A,B,False,,0.51,
+Qwen-2.5-7B,q1b_iv_C,mcq,regex,2.0,2.0,A,A,True,,1.28,
+Qwen-2.5-7B,q1b_viii_semester,mcq,visualization,2.0,2.0,A,A,True,,0.37,
+Qwen-2.5-7B,q1b_viii_hist,mcq,visualization,2.0,2.0,B,B,True,,0.3,
+Qwen-2.5-7B,q1b_ix_hist,mcq,visualization,2.0,2.0,A,A,True,,0.35,
+Qwen-2.5-7B,q1b_ix_kde,mcq,visualization,2.0,2.0,A,A,True,,0.35,
+Qwen-2.5-7B,q2b_iv,mcq,statistics,0.0,0.5,A,B,False,,0.27,
+Qwen-2.5-7B,q2b_vi,mcq,statistics,0.5,0.5,B,B,True,,0.36,
+Qwen-2.5-7B,q3a,mcq,linear_regression,0.0,3.0,B,A,False,,1.24,
+Qwen-2.5-7B,q3a_nonlinear,mcq,linear_regression,3.0,3.0,B,B,True,,0.31,
+Qwen-2.5-7B,q3c_i_rank,mcq,linear_regression,2.0,2.0,A,A,True,,0.96,
+Qwen-2.5-7B,q3d_regularization,mcq,linear_regression,1.0,1.0,A,A,True,,0.99,
+Qwen-2.5-7B,q4a_bias_model2,mcq,linear_regression,0.0,2.0,B,A,False,,0.27,
+Qwen-2.5-7B,q4b_irreducible,mcq,linear_regression,0.0,1.0,B,A,False,,0.32,
+Qwen-2.5-7B,q6b_pca_variance,mcq,pca,0.0,1.0,D,C,False,,0.93,
+Qwen-2.5-7B,q6c_pca_total_variance,mcq,pca,1.0,1.0,D,D,True,,0.46,
+Qwen-2.5-7B,q2a_i,short_answer,probability,2.0,2.0,"The bias of the estimator \(\hat{\alpha}\) is calculated as follows:
+\[ E[\hat{\alpha}] = E\left[\frac{1}{100} \sum_{i=1}^{100} X_i\right] = \frac{1}{100} \sum_{i=1}^{100} E[X_i] = \frac{1}{100} \cdot",E[alpha-hat] = E[(1/100)*sum(Xi)] = (1/100)*sum(E[Xi]) = (1/100)*(100*alpha) = alpha. Therefore Bias,,"The student correctly applied linearity of expectation, computed E[alpha-hat] = alpha, and concluded the estimator is unbiased with Bias = 0.",1.94,rubric_anchored
+Qwen-2.5-7B,q2a_ii,short_answer,probability,2.0,2.0,"The variance of the sample mean \(\hat{\alpha} = \frac{1}{100}\sum_{i=1}^{100}X_i\) can be calculated as follows: Since the variances of all \(Xi\) are equal to \(\sigma^2\), and assuming the \(Xi\) a",Var(alpha-hat) = Var((1/100)*sum(Xi)) = (1/100^2)*sum(Var(Xi)) = (1/10000)*(100*sigma^2) = sigma^2/1,,"The student correctly applied the variance scaling rule (Var(cX) = c²Var(X)), used independence to sum variances, and arrived at the correct final answer of σ²/100.",4.94,rubric_anchored
+Qwen-2.5-7B,q3e_cv,short_answer,linear_regression,1.0,1.0,"Sarika needs to calculate the Mean Squared Error (MSE) 24 times. Here's the breakdown: There are 6 values of lambda and 4 folds. For each value of lambda, the process is repeated 4 times (once for eac",One validation MSE is computed per fold per lambda value. There are 4 folds and 6 lambda values. Tot,,"The student correctly identified that 4 MSE values are computed per lambda (one per fold), multiplied by 6 lambda values, and arrived at the correct answer of 24 total MSE calculations.",3.04,rubric_anchored
+Qwen-2.5-7B,q5a_logistic_max_accuracy,short_answer,logistic_regression,0.0,2.0,The maximum possible accuracy a logistic regression model can achieve on this dataset is 100% if the scatter plot perfectly separates the outcomes based on fan counts with no overlap. This means that ,"The maximum accuracy is 4/5 = 80%. The dataset is not linearly separable, so we cannot achieve 100% ",,"The student states 100% accuracy is possible under certain conditions, directly contradicting the reference answer that the maximum is 80% because the data is not linearly separable; the student provi",1.13,rubric_anchored
+Qwen-2.5-7B,q5b_logistic_prob,short_answer,logistic_regression,2.0,2.0,"Given the logistic regression model parameters \(\hat{\theta} = [3, 2, 0]^T\) and the features for the new game as \(x = [1, 3, 1]^T\) (where the first element is the bias term), we can compute the lo","x = [1, 3, 1]. z = theta^T * x = 3*1 + 2*3 + 0*1 = 3 + 6 + 0 = 9. p = sigmoid(9) = 1/(1 + e^{-9}).",,"The student correctly formed the feature vector, computed z = 9, and applied the sigmoid function with the correct formula, though the numerical approximation was not required.",4.13,rubric_anchored
+Qwen-2.5-7B,q5c_ii_precision,short_answer,logistic_regression,0.0,1.0,"To calculate the precision, we first identify the true positives (TP) and false positives (FP). Predicting Y = 1 when the true label is 1 is a true positive, and predicting Y = 1 when the true label i","TP = 1 (Y-hat=1 and Y=1: only row 2 where Y-hat=1, Y=1). FP = 2 (Y-hat=1 but Y=0: rows 1 and 3). Pre",,"The student incorrectly identified TP=2 and FP=3 instead of the correct TP=1 and FP=2, leading to an incorrect precision of 0.4 instead of 1/3; the student also misidentified which rows correspond to ",4.6,rubric_anchored
+Qwen-2.5-7B,q7a_clustering,short_answer,clustering,1.5,2.0,"1. Start with each data point as an individual cluster: {0}, {1}, {3}, {7}, {12}.
+2. Calculate the complete linkage distance between all pairs of clusters. The maximum distance between any two points ","1. {A} merges with {B} to form {A,B} (distance=1). 2. {C} merges with {A,B} to form {A,B,C} (complet",,"The student correctly identifies the first three merges but fails to show {D} and {E} merging as a separate step before the final merge, instead merging {D} directly into the growing cluster.",7.29,rubric_anchored
