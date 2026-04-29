@@ -1,0 +1,75 @@
+version: 1
+
+project:
+  title: Small Models Spring 2026
+  github: ds-modules/Small_Models_SP26
+  jupyter: true
+  toc:
+    - file: intro.md
+    - title: Instructor Setup Utils
+      children:
+        - file: 1-Instructor_Utils/1-1-API_Key_Setup.ipynb
+        - file: 1-Instructor_Utils/1-2-HuggingFace_Hub_Download_gguf.ipynb
+        - file: 1-Instructor_Utils/Embedding_Download.ipynb
+        - file: 1-Instructor_Utils/GPT4All_Download_gguf.ipynb
+        - file: 1-Instructor_Utils/LLM_Explorer_Jupyter_ModelSearch.ipynb
+        - file: 1-Instructor_Utils/Where_is_this_Notebook_Running.ipynb
+        - file: 1-Instructor_Utils/gpu-test.ipynb
+    - title: Beginner Notebooks
+      children:
+        - file: 2-Beginner_NBs/2-1-LlamaCpp_SmallLM_Demo.ipynb
+        - file: 2-Beginner_NBs/2-2-Model_Weights_and_Tokens.ipynb
+        - file: 2-Beginner_NBs/GPT4All_SmallLM_Demo.ipynb
+        - file: 2-Beginner_NBs/Gradio_Chatbot_LlamaCpp.ipynb
+        - file: 2-Beginner_NBs/Quantization_Demo_Data8.ipynb
+        - file: 2-Beginner_NBs/QuantizationBasics.ipynb
+    - title: API Notebooks
+      children:
+        - file: 3-API_NBs/3-1-Anthropic_API.ipynb
+        - file: 3-API_NBs/3-2-OpenAI_API.ipynb
+        - file: 3-API_NBs/3-3-OpenRouter_OLMo3.ipynb
+        - file: 3-API_NBs/3-3-NRP_VLLM_API.ipynb
+    - title: SAT Test Taker
+      children:
+        - file: 4-SAT-TestTaker/GPT4allTestTaker-shared.ipynb
+        - file: 4-SAT-TestTaker/QwenTestTaker-shared.ipynb
+        - file: 4-SAT-TestTaker/QwenTestTaker-shared-sanjana.ipynb
+    - title: RAG
+      children:
+        - file: 5-RAG/RAG_Tutorial.ipynb
+        - file: 5-RAG/Data88E-Demo/anthropic_demo.ipynb
+        - file: 5-RAG/Data88E-Demo/gpt4all_demo.ipynb
+        - file: 5-RAG/Data88E-Demo/llamacpp_demo.ipynb
+        - file: 5-RAG/EconTextbook/RAG_Vector_Store.ipynb
+        - file: 5-RAG/FOMC/FOMC_Decisions_Panel.ipynb
+        - file: 5-RAG/FOMC/RAG_FOMC_3_2_26.ipynb
+        - file: 5-RAG/FOMC/RAG_FOMC_3_8_26.ipynb
+        - file: 5-RAG/FOMC/RAG_FOMC_FRED.ipynb
+    - title: No Code Notebooks
+      children:
+        - file: 6-NoCodeNBs/LLM_Context_Management_and_Dynamic_Prompts.ipynb
+        - file: 6-NoCodeNBs/Personal_Writing_Assistant.ipynb
+    - title: GPU
+      children:
+        - file: 7-GPU/7-1-llama_cpp_gpu_explorer.ipynb
+        - file: 7-GPU/llama_cpp_gpu_explorer_hub.ipynb
+        - file: 7-GPU/torch-test-model.ipynb
+        - file: 7-GPU/torch-use-gpu.ipynb
+    - title: Evals
+      children:
+        - file: 8-Evals/updated_data100_eval/data100_benchmark.ipynb
+
+site:
+  actions:
+    - title: Open Issue
+      url: https://github.com/ds-modules/Small_Models_SP26/issues/new
+  options:
+    base: /Small_Models_SP26/
+    logo: hugging-ollama-jupyter-face.png
+    logo_text: Small Models Spring 2026
+    favicon: hugging-ollama-jupyter-face.png
+    navigation_with_keys: true
+    show_toc_level: 2
+    show_navbar_depth: 2
+    use_issues_button: true
+    use_repository_button: true
