@@ -1,0 +1,288 @@
+{
+  "exam_name": "Data C100/200 Final",
+  "semester": "Fall 2025",
+  "source": "https://ds100.org/fa25/resources/assets/exams/fa25/fa25_final_sol.pdf",
+  "questions": [
+    {
+      "id": "q1a_i", "type": "mcq", "topic": "sampling", "points": 1,
+      "question": "Jake sends a survey to the team captain of each IM basketball team that registered to play during the Fall 2025 semester at UC Berkeley. What is the population of interest in Jake's survey?",
+      "choices": {
+        "A": "All IM sport captains who registered their team during Fall 2025",
+        "B": "Basketball IM team captains who registered their team during Fall 2025",
+        "C": "Basketball IM team captains who registered their team during Fall 2025 AND who responded to Jake's survey",
+        "D": "Basketball IM team captains who registered their team during any semester"
+      },
+      "answer": "B",
+      "explanation": "The population of interest is the group Jake wants to study: all basketball IM team captains who registered during Fall 2025."
+    },
+    {
+      "id": "q1a_ii", "type": "mcq", "topic": "sampling", "points": 1,
+      "question": "Jake sends a survey to the team captain of each IM basketball team that registered to play during the Fall 2025 semester. What is the sampling frame of Jake's survey?",
+      "choices": {
+        "A": "All IM sport captains who registered their team during Fall 2025",
+        "B": "Basketball IM team captains who registered their team during Fall 2025",
+        "C": "Basketball IM team captains who registered their team during Fall 2025 AND who responded to Jake's survey",
+        "D": "Basketball IM team captains who registered their team during any semester"
+      },
+      "answer": "B",
+      "explanation": "The sampling frame is the list from which Jake actually draws: all basketball IM team captains registered in Fall 2025."
+    },
+    {
+      "id": "q1a_iii", "type": "mcq", "topic": "sampling", "points": 1,
+      "question": "What is the sample in Jake's survey?",
+      "choices": {
+        "A": "All IM sport captains who registered their team during Fall 2025",
+        "B": "Basketball IM team captains who registered their team during Fall 2025",
+        "C": "Basketball IM team captains who registered their team during Fall 2025 AND who responded to Jake's survey",
+        "D": "Basketball IM team captains who registered their team during any semester"
+      },
+      "answer": "C",
+      "explanation": "The sample is only those who actually responded to the survey."
+    },
+    {
+      "id": "q1b_ii", "type": "mcq", "topic": "data_types", "points": 2,
+      "question": "The basketball DataFrame has a column Total Points (total points scored by the team, type = int). What is the variable type of Total Points?",
+      "choices": {
+        "A": "Qualitative Nominal",
+        "B": "Qualitative Ordinal",
+        "C": "Quantitative"
+      },
+      "answer": "C",
+      "explanation": "Total Points is a numeric quantity with meaningful arithmetic operations — it is quantitative."
+    },
+    {
+      "id": "q1b_iii", "type": "mcq", "topic": "data_types", "points": 1,
+      "question": "The basketball DataFrame has a column Team (unique team name, type = String). What is the variable type of Team?",
+      "choices": {
+        "A": "Qualitative Nominal",
+        "B": "Qualitative Ordinal",
+        "C": "Quantitative"
+      },
+      "answer": "A",
+      "explanation": "Team names are categories with no inherent ordering — qualitative nominal."
+    },
+    {
+      "id": "q1b_iv_A", "type": "mcq", "topic": "regex", "points": 2,
+      "question": "Jake wants to extract the Semester from the Team Description column (e.g., extract 'Fall 2025' from 'D(100) Hoopers played during the Fall 2025 semester on Monday'). Which regex pattern(s) correctly extract the semester? Evaluate: r\"([FallSpring] \\d+)\"",
+      "choices": {
+        "A": "True",
+        "B": "False"
+      },
+      "answer": "B",
+      "explanation": "[FallSpring] is a character class matching one character (F, a, l, S, p, r, i, n, g), not the words Fall or Spring. This is incorrect."
+    },
+    {
+      "id": "q1b_iv_B", "type": "mcq", "topic": "regex", "points": 2,
+      "question": "Evaluate the regex pattern r\"(Fall|Spring)\\s\\d{4}\" for extracting semester (e.g., 'Fall 2025') from team description strings.",
+      "choices": {
+        "A": "True",
+        "B": "False"
+      },
+      "answer": "B",
+      "explanation": "This pattern matches but doesn't use a capture group around the full semester string — str.extract needs a capture group () to return the match."
+    },
+    {
+      "id": "q1b_iv_C", "type": "mcq", "topic": "regex", "points": 2,
+      "question": "Evaluate the regex pattern r\"during the (\\w{,6} \\d{4}) semester\" for extracting semester from team description strings.",
+      "choices": {
+        "A": "True",
+        "B": "False"
+      },
+      "answer": "A",
+      "explanation": "\\w{,6} matches up to 6 word characters (covering 'Fall' and 'Spring'), followed by a space and 4 digits. The capture group correctly extracts 'Fall 2025' or 'Spring 2025'."
+    },
+    {
+      "id": "q1b_viii_semester", "type": "mcq", "topic": "visualization", "points": 2,
+      "question": "Jake wants to visualize the frequency of each unique value of the Semester column (a categorical variable). Which of the following is an appropriate visualization? Select all that apply. Evaluate: Bar plot",
+      "choices": {
+        "A": "True",
+        "B": "False"
+      },
+      "answer": "A",
+      "explanation": "Bar plots are appropriate for showing frequency of categorical variables like Semester."
+    },
+    {
+      "id": "q1b_viii_hist", "type": "mcq", "topic": "visualization", "points": 2,
+      "question": "Jake wants to visualize the frequency of each unique value of the Semester column (categorical). Is a Histogram appropriate?",
+      "choices": {
+        "A": "True",
+        "B": "False"
+      },
+      "answer": "B",
+      "explanation": "Histograms are for continuous quantitative variables, not categorical ones like Semester."
+    },
+    {
+      "id": "q1b_ix_hist", "type": "mcq", "topic": "visualization", "points": 2,
+      "question": "Jake wants to look at the distribution of the values in the Total Points column (quantitative). Is a Histogram appropriate?",
+      "choices": {
+        "A": "True",
+        "B": "False"
+      },
+      "answer": "A",
+      "explanation": "Histograms are appropriate for visualizing the distribution of a quantitative variable."
+    },
+    {
+      "id": "q1b_ix_kde", "type": "mcq", "topic": "visualization", "points": 2,
+      "question": "Jake wants to look at the distribution of the values in the Total Points column (quantitative). Is a KDE plot appropriate?",
+      "choices": {
+        "A": "True",
+        "B": "False"
+      },
+      "answer": "A",
+      "explanation": "KDE plots are appropriate for visualizing the distribution of a continuous quantitative variable."
+    },
+    {
+      "id": "q2a_i", "type": "short_answer", "topic": "probability", "points": 2,
+      "question": "Define estimator alpha-hat as the sample mean: alpha-hat = (1/100) * sum(Xi) for i=1 to 100. Let alpha = E[Xi] be the true average. Calculate Bias(alpha-hat). Show your work. Recall: Bias(alpha-hat) = E[alpha-hat] - alpha.",
+      "answer": "E[alpha-hat] = E[(1/100)*sum(Xi)] = (1/100)*sum(E[Xi]) = (1/100)*(100*alpha) = alpha. Therefore Bias(alpha-hat) = E[alpha-hat] - alpha = alpha - alpha = 0. The estimator is unbiased.",
+      "rubric": [
+        "Applies linearity of expectation correctly",
+        "Computes E[alpha-hat] = alpha",
+        "States Bias = 0 (unbiased)"
+      ]
+    },
+    {
+      "id": "q2a_ii", "type": "short_answer", "topic": "probability", "points": 2,
+      "question": "Suppose Var(Xi) = sigma^2 for all i = 1,...,100. Our estimator is alpha-hat = (1/100)*sum(Xi). Calculate Var(alpha-hat) in terms of sigma^2. Show your work.",
+      "answer": "Var(alpha-hat) = Var((1/100)*sum(Xi)) = (1/100^2)*sum(Var(Xi)) = (1/10000)*(100*sigma^2) = sigma^2/100. Using independence of Xi's to split the variance.",
+      "rubric": [
+        "Applies variance scaling rule: Var(cX) = c^2 * Var(X)",
+        "Uses independence to sum variances",
+        "Arrives at sigma^2/100"
+      ]
+    },
+    {
+      "id": "q2b_iv", "type": "mcq", "topic": "statistics", "points": 0.5,
+      "question": "Suppose we increase the number of bootstrap samples from 10,000 to 100,000, with no changes to our original sample. It is very likely that this action will substantially reduce the width of a bootstrapped confidence interval of the average number of games attended.",
+      "choices": {"A": "True", "B": "False"},
+      "answer": "B",
+      "explanation": "Increasing the number of bootstrap resamples improves precision of the bootstrap distribution estimate, but the CI width is primarily determined by the original sample size (n=100), not the number of bootstrap samples. The width will not substantially change."
+    },
+    {
+      "id": "q2b_vi", "type": "mcq", "topic": "statistics", "points": 0.5,
+      "question": "Suppose we construct the bootstrap distribution of the MAXIMUM number of games attended by any UC Berkeley student, using 10,000 bootstrap samples of size 100. This distribution would almost certainly be approximately symmetric.",
+      "choices": {"A": "True", "B": "False"},
+      "answer": "B",
+      "explanation": "The bootstrap distribution of the maximum is typically right-skewed (or irregular), not symmetric. CLT applies to means, not maxima."
+    },
+    {
+      "id": "q3a", "type": "mcq", "topic": "linear_regression", "points": 3,
+      "question": "Which of the following models are linear in theta-vector? Evaluate: y = theta_0 + theta_1 * x1^2",
+      "choices": {"A": "True", "B": "False"},
+      "answer": "A",
+      "explanation": "x1^2 is a transformation of the feature, not the parameter. The model is linear in theta because theta_0 and theta_1 appear linearly. x1^2 can be treated as a new feature."
+    },
+    {
+      "id": "q3a_nonlinear", "type": "mcq", "topic": "linear_regression", "points": 3,
+      "question": "Which of the following models are linear in theta-vector? Evaluate: y = theta_0 + theta_1 * theta_2 * x1",
+      "choices": {"A": "True", "B": "False"},
+      "answer": "B",
+      "explanation": "theta_1 * theta_2 is a product of two parameters — this is nonlinear in the parameter vector theta."
+    },
+    {
+      "id": "q3c_i_rank", "type": "mcq", "topic": "linear_regression", "points": 2,
+      "question": "Sarika one-hot encodes the genre column (5 categories: R&B, Pop, Lo-Fi, Orchestral, Indie) and adds a bias column, but does NOT remove a reference category. She is unable to get a unique OLS solution. Which statement explains this? Evaluate: The matrix X does not have full column rank. So, its columns are linearly dependent.",
+      "choices": {"A": "True", "B": "False"},
+      "answer": "A",
+      "explanation": "When all one-hot encoded columns plus a bias column are included, the one-hot columns sum to the bias column (all 1s), creating linear dependence. The design matrix is not full rank."
+    },
+    {
+      "id": "q3d_regularization", "type": "mcq", "topic": "linear_regression", "points": 1,
+      "question": "Which statement about regularization L(theta) = ||Y - X*theta||^2 + lambda*R(theta) is correct? Evaluate: Increasing lambda typically increases model bias squared but decreases model variance.",
+      "choices": {"A": "True", "B": "False"},
+      "answer": "A",
+      "explanation": "Larger lambda penalizes parameters more, leading to simpler (more biased) models with lower variance — the classic bias-variance tradeoff."
+    },
+    {
+      "id": "q3e_cv", "type": "short_answer", "topic": "linear_regression", "points": 1,
+      "question": "To determine the best-performing value of lambda out of 6 possible options using 4-fold cross-validation, how many times does Sarika need to calculate the MSE on a held-out validation set? Show your work.",
+      "answer": "One validation MSE is computed per fold per lambda value. There are 4 folds and 6 lambda values. Total MSE calculations = 4 * 6 = 24.",
+      "rubric": [
+        "Recognizes 4 MSE values per lambda (one per fold)",
+        "Multiplies by 6 lambda values",
+        "Arrives at 24 total MSE calculations"
+      ]
+    },
+    {
+      "id": "q4a_bias_model2", "type": "mcq", "topic": "linear_regression", "points": 2,
+      "question": "Model 1 predicts price using has_boba and sweetness_level. Model 2 predicts price using order, has_boba, and sweetness_level (more features). Neither is regularized. Is it guaranteed that: (squared bias of Model 2) <= (squared bias of Model 1)?",
+      "choices": {"A": "True", "B": "False"},
+      "answer": "A",
+      "explanation": "Adding more features to a model can only decrease or maintain bias (more complex model can fit the true function better). Model 2 has strictly more features, so bias squared is guaranteed <= Model 1."
+    },
+    {
+      "id": "q4b_irreducible", "type": "mcq", "topic": "linear_regression", "points": 1,
+      "question": "Model 2 uses order, has_boba, sweetness_level. Model 3 adds LASSO regularization to Model 2. Is it guaranteed that: (irreducible error of Model 2) = (irreducible error of Model 3)?",
+      "choices": {"A": "True", "B": "False"},
+      "answer": "A",
+      "explanation": "Irreducible error is noise inherent to the data — it doesn't depend on the model choice or regularization. It is always the same for models fit on the same data."
+    },
+    {
+      "id": "q5a_logistic_max_accuracy", "type": "short_answer", "topic": "logistic_regression", "points": 2,
+      "question": "Gisella collects data from 5 dance competitions. Looking at a scatter plot of fan counts vs. outcome, what is the maximum possible accuracy a logistic regression model can achieve on this dataset? Justify your answer in one sentence.",
+      "answer": "The maximum accuracy is 4/5 = 80%. The dataset is not linearly separable, so we cannot achieve 100% accuracy. The best linear decision boundary correctly classifies 4 of the 5 data points.",
+      "rubric": [
+        "States 4/5 or 80% as the maximum accuracy",
+        "Mentions the data is not linearly separable",
+        "Provides valid justification"
+      ]
+    },
+    {
+      "id": "q5b_logistic_prob", "type": "short_answer", "topic": "logistic_regression", "points": 2,
+      "question": "Gisella's logistic regression model has theta-hat = [3, 2, 0]^T (bias, opponent fans, One-Hot Wonders fans). A new game has 3 opponent fans and 1 One-Hot Wonders fan. Compute the probability p that the One-Hot Wonders win. Show your work.",
+      "answer": "x = [1, 3, 1]. z = theta^T * x = 3*1 + 2*3 + 0*1 = 3 + 6 + 0 = 9. p = sigmoid(9) = 1/(1 + e^{-9}).",
+      "rubric": [
+        "Correctly forms the feature vector x = [1, 3, 1]",
+        "Correctly computes z = 9",
+        "Applies sigmoid: p = 1/(1+e^{-9})"
+      ]
+    },
+    {
+      "id": "q5c_ii_precision", "type": "short_answer", "topic": "logistic_regression", "points": 1,
+      "question": "Using threshold 0.45 on these 5 predictions: P(Y=1|x) = [0.95, 0.75, 0.60, 0.40, 0.25], True labels Y = [0, 1, 0, 0, 1]. Predicted Y-hat = [1, 1, 1, 0, 0]. What is the precision? Show your work.",
+      "answer": "TP = 1 (Y-hat=1 and Y=1: only row 2 where Y-hat=1, Y=1). FP = 2 (Y-hat=1 but Y=0: rows 1 and 3). Precision = TP/(TP+FP) = 1/(1+2) = 1/3.",
+      "rubric": [
+        "Correctly identifies TP=1",
+        "Correctly identifies FP=2",
+        "Computes precision = 1/3"
+      ]
+    },
+    {
+      "id": "q6b_pca_variance", "type": "mcq", "topic": "pca", "points": 1,
+      "question": "Consider Dataset A (a scatter plot showing negative correlation between two features). Suppose the variance of each feature is 10. What is the variance of Dataset A in the PC1 dimension?",
+      "choices": {
+        "A": "Less than 10",
+        "B": "Exactly 10",
+        "C": "Between 10 and 20 (exclusive)",
+        "D": "Exactly 20",
+        "E": "Greater than 20"
+      },
+      "answer": "C",
+      "explanation": "PC1 captures the direction of maximum variance. For a negatively correlated dataset, PC1 variance will be between the per-feature variance (10) and the total variance (20), exclusive."
+    },
+    {
+      "id": "q6c_pca_total_variance", "type": "mcq", "topic": "pca", "points": 1,
+      "question": "Consider Dataset A. Each feature has variance 10. What is the SUM of variance in PC1 and PC2 dimensions?",
+      "choices": {
+        "A": "Less than 10",
+        "B": "Exactly 10",
+        "C": "Between 10 and 20 (exclusive)",
+        "D": "Exactly 20",
+        "E": "Greater than 20"
+      },
+      "answer": "D",
+      "explanation": "PCA preserves total variance. With 2 features each of variance 10, total variance = 20. The sum of all PC variances always equals total feature variance."
+    },
+    {
+      "id": "q7a_clustering", "type": "short_answer", "topic": "clustering", "points": 2,
+      "question": "Data points A=0, B=1, C=3, D=7, E=12 on a number line. Write the steps of agglomerative clustering with COMPLETE linkage, starting from individual clusters until one giant cluster.",
+      "answer": "1. {A} merges with {B} to form {A,B} (distance=1). 2. {C} merges with {A,B} to form {A,B,C} (complete linkage distance = max(|C-A|,|C-B|) = 3). 3. {D} merges with {E} to form {D,E} (distance=5). 4. {A,B,C} merges with {D,E} to form {A,B,C,D,E} (complete linkage = max distance between clusters = |A-E|=12).",
+      "rubric": [
+        "Step 1: {A} merges with {B}",
+        "Step 2: {C} merges with {A,B}",
+        "Step 3: {D} merges with {E}",
+        "Step 4: {A,B,C} merges with {D,E}"
+      ]
+    }
+  ]
+}
