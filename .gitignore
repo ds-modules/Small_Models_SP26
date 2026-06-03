@@ -2,3 +2,4 @@
 **/.ipynb_checkpoints
 **/.env
 **/__pycache__
+_build/

@@ -4,6 +4,11 @@ Introductory AI learning materials for freshmen and community college students. 
 
 This work was presented as part of a tutorial at the 2026 NAIRR Annual Meeting. 
 
+## JupyterHub Links 
+
+- Workshop Hub (Shared Password): [Launch](https://gpu-demo.cloudbank.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fds-modules%2FSmall_Models_SP26&urlpath=lab%2Ftree%2FSmall_Models_SP26%2F)
+
+
 Resources
 [Slide Deck 1](https://docs.google.com/presentation/d/1pHkNsEhVZVt1fodAtpcIaOgnvt8HDO5PRUu7xQGaBQk/edit?usp=sharing)  - Intro  to Team, Intro to Jupyterhub  -  Intro to Small Models
 [Slide Deck 2](https://docs.google.com/presentation/d/1rPtyIPq9fQC91Vp4w3YESjVjqWAfS6ubUBB0x0rSDnA/edit?usp=sharing)  - Teaching workflow, NRP, Jetstream2
@@ -30,8 +35,8 @@ Narrative notebooks with interactive elements through widgets. Used for conceptu
 
 ---
 
-## JupyterHub Links  [These links were for the March 2026 Tutorial and may not stay live]
 
-- Workshop Hub (Shared Password): [Launch](https://gpu-demo.cloudbank.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fds-modules%2FSmall_Models_SP26&urlpath=lab%2Ftree%2FSmall_Models_SP26%2F)
+
+ ### [These links were for the March 2026 Tutorial and may not stay live]
 - NRP Hub (CILogon): [Launch](https://training.nrp-nautilus.io/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fds-modules%2FSmall_Models_SP26&branch=main&urlpath=lab%2Ftree%2FSmall_Models_SP26%2F) — click **Sign in with Authentik**, then look for CILogon, then refresh the page
 - Jetstream2 Hub (Shared Password): [Launch](https://hub.soc260005.projects.jetstream-cloud.org/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fds-modules%2FSmall_Models_SP26&urlpath=lab%2Ftree%2FSmall_Models_SP26%2F)
